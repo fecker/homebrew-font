@@ -53,7 +53,7 @@ class Ricty < Formula
       rename_to = "\\1 "
     end
 
-    ricty_args = ["Inconsolata-Regular.ttf", "Inconsolata-Bold.ttf", "migu-1m-regular.ttf", "migu-1m-bold.ttf"]
+    ricty_args = ["-d", "|D07Zzr", "Inconsolata-Regular.ttf", "Inconsolata-Bold.ttf", "migu-1m-regular.ttf", "migu-1m-bold.ttf"]
     ricty_args.unshift("-z") if build.without? "visible-space"
     ricty_args.unshift("-a") if build.without? "fullwidth"
 
@@ -80,7 +80,7 @@ class Ricty < Formula
   def caveats; <<~EOS
     ***************************************************
     Generated files:
-      #{Dir[share + "fonts/Ricty*.ttf"].join("\n      ")}
+      #{Dir[share + "fonts/Ricty*.ttf"].sort.join("\n  ")}
     ***************************************************
     To install Ricty:
       $ cp -f #{share}/fonts/Ricty*.ttf ~/Library/Fonts/
