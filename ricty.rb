@@ -15,7 +15,7 @@ class Ricty < Formula
   url "https://raw.githubusercontent.com/rictyfonts/rictyfonts.github.io/master/files/ricty_generator-4.1.1.sh"
   sha256 "86bf0fed84ef806690b213798419405d7ca2a1a4bed4f6a28b87c2e2d07ad60d"
 
-  option "with-powerline", "Patch for Powerline"
+  option "without-powerline", "Disable patch for Powerline"
   option "without-fullwidth", "Disable fullwidth ambiguous characters"
   option "without-visible-space", "Disable visible zenkaku space"
   option "with-patch-in-place", "Patch Powerline glyphs directly into Ricty fonts without creating new 'for Powerline' fonts"
@@ -45,7 +45,7 @@ class Ricty < Formula
     resource("inconsolataregular").stage { buildpath.install Dir["*"] }
     resource("inconsolatabold").stage { buildpath.install Dir["*"] }
 
-    if build.with? "powerline"
+    unless build.without? "powerline"
       powerline = Powerline.new
       powerline.brew { buildpath.install Dir["*"] }
       powerline.patch
@@ -59,7 +59,7 @@ class Ricty < Formula
 
     system "sh", "./ricty_generator-#{version}.sh", *ricty_args
 
-    if build.with? "powerline"
+    unless build.without? "powerline"
       powerline_args = []
       powerline_args.unshift("--no-rename") if build.with? "patch-in-place"
       Dir["Ricty*.ttf"].each do |ttf|
